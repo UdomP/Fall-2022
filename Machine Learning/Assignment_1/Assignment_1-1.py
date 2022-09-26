@@ -119,6 +119,7 @@ testingFeatures = np.asarray([[a,b,c,d,e,f,g,h,i] for a,b,c,d,e,f,g,h,i in zip(t
 trainingOutput = np.asarray([a for a in age])
 testingOutput = np.asarray([a for a in t_age])
 
+print(trainingFeatures.shape)
 theta = np.random.uniform(0.0, 1.0, size=9)
 #theta = np.ones([9,1])
 alpha = .001
