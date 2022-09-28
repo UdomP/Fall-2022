@@ -3,7 +3,6 @@ def fives(n):
     s = []
     while(n >= i):
         if((i % 5) == 0):
-            # print(i, end=', ')
             s.append(i)
         i += 1
     print(*s, sep=', ')
