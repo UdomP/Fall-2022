@@ -6,8 +6,8 @@ infile=open('17701310.txt','r+')
 
 # theta = np.random.uniform(0.0, 1.0, size=4)
 theta = np.asarray([.5,.5,.5,.5])
-alpha = .001
-iteration = 1000
+alpha = .01
+iteration = 200
 
 data = []
 output = []

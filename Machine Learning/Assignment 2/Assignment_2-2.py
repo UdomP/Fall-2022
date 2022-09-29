@@ -81,6 +81,7 @@ def predict(x, y, t):
 normalizedData = normalization(np.asarray(data))
 nTrainingData = np.asarray(normalizedData[0: int(len(normalizedData) * .85)])
 nTestingData = np.asarray(normalizedData[int(len(normalizedData) * .85):])
+print(normalizedData)
 
 # nTrainingData = normalization(trainingData)
 # nTestingData = normalization(testingData)
