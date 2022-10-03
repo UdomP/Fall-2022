@@ -4,10 +4,13 @@ import numpy as np
 
 infile=open('17701310.txt','r+')
 
-# theta = np.random.uniform(0.0, 1.0, size=4)
 theta = np.asarray([.5,.5,.5,.5])
-alpha = .01
-iteration = 1000
+alpha = .005
+iteration = 400
+# alpha = .00255
+# iteration = 500
+# alpha = .00952
+# iteration = 900
 
 data = []
 output = []
@@ -64,35 +67,22 @@ def predict(x, y, t):
     for i in range(len(y)):
         actual = y[i]
         predict = np.round(h(x, t, i))
-        # predict = (h(x, t, i))
+        # predict = h(x, t, i)
         # print("a = " + str(actual))
         # print("p = " + str(predict))
-        if(actual == 0 and predict == 0):
+        if(actual == 1 and predict == 1):
             TP += 1
-        elif(actual == 1 and predict == 1):
+        elif(actual == 0 and predict == 0):
             TN += 1
-        elif(actual == 1 and predict == 0):
-            FP += 1
         elif(actual == 0 and predict == 1):
+            FP += 1
+        elif(actual == 1 and predict == 0):
             FN += 1
     return TP,TN,FP,FN
-
 
 normalizedData = normalization(np.asarray(data))
 nTrainingData = np.asarray(normalizedData[0: int(len(normalizedData) * .85)])
 nTestingData = np.asarray(normalizedData[int(len(normalizedData) * .85):])
-
-# nTrainingData = normalization(trainingData)
-# nTestingData = normalization(testingData)
-# print(normalizedData)
-# print(type(normalizedData))
-# print(nTestingData)
-# print(nTestingData.shape)
-# print(type(nTestingData))
-# print(nTrainingData)
-# print(nTrainingData.shape)
-# print(type(nTrainingData))
-
 
 print('Maximum Likelihood Estimation with normalized Data')
 print("Alpha = " + str(alpha))

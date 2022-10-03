@@ -4,16 +4,18 @@ import numpy as np
 
 infile=open('17701310.txt','r+')
 
-# theta = np.random.uniform(0.0, 1.0, size=4)
 theta = np.asarray([.5,.5,.5,.5])
-alpha = .001
-iteration = 1000
+alpha = .005
+iteration = 400
+# alpha = .00255
+# iteration = 500
+# alpha = .00952
+# iteration = 900
 
 data = []
 output = []
 for w in infile.read().split():
     n = w.split(',')
-    # data.append([1, int(n[0]), int(n[1]), int(n[2])])
     data.append([1, float(n[0]), float(n[1]), float(n[2])])
     if n[3] == '2':
         output.append(1)
@@ -56,16 +58,13 @@ def predict(x, y, t):
     for i in range(len(y)):
         actual = y[i]
         predict = np.round(h(x, t, i))
-        # predict = h(x, t, i)
-        # print("a = " + str(actual))
-        # print("p = " + str(predict))
-        if(actual == 0 and predict == 0):
+        if(actual == 1 and predict == 1):
             TP += 1
-        elif(actual == 1 and predict == 1):
+        elif(actual == 0 and predict == 0):
             TN += 1
-        elif(actual == 1 and predict == 0):
-            FP += 1
         elif(actual == 0 and predict == 1):
+            FP += 1
+        elif(actual == 1 and predict == 0):
             FN += 1
     return TP,TN,FP,FN
 

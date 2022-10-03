@@ -12,5 +12,7 @@ def findMin(func, x):
 
 
 xList = np.arange(0.0, 2.01, 0.01)
-func = lambda x : (x**3) - (2 * np.cos(np.cos(x))) + 9
+# xList = [i/100 for i in range(0,100)]
+print(xList)
+func = lambda x : (x**3) - (2 * np.cos((x))) + 9
 findMin(func, xList)
