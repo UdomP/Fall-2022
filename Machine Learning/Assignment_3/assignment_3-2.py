@@ -142,27 +142,29 @@ for i in classifiedSentencesTR:
 sentencesNpArray = np.asarray(newClassifiedSentences)
 sentencesNpArrayTR = np.asarray(newClassifiedSentencesTR)
 
-theta = np.asarray([.5,.5,.5,.5])
-alpha = .005
-iteration = 400
+print(sentencesNpArray)
 
-print('Maximum Likelihood Estimation with normal Data')
-print("Alpha = " + str(alpha))
-print("Iteration = " + str(iteration))
-theta = train(iteration, trainingData, trainingOutput, alpha, theta)
-print('Theta = ', end = '')
-print(theta)
+# theta = np.asarray([.5,.5,.5,.5])
+# alpha = .005
+# iteration = 400
 
-TP,TN,FP,FN = predict(testingData, testingOutput, theta)
-print("True Positive = " + str(TP))
-print("True Negative = " + str(TN))
-print("False Positive = " + str(FP))
-print("False Negative = " + str(FN))
-print("Total = " + str(TP+TN+FP+FN))
+# print('Maximum Likelihood Estimation with normal Data')
+# print("Alpha = " + str(alpha))
+# print("Iteration = " + str(iteration))
+# theta = train(iteration, trainingData, trainingOutput, alpha, theta)
+# print('Theta = ', end = '')
+# print(theta)
 
-precision = TP/(TP + FP)
-recall = TP/(TP + FN)
-print("precision = " + str(precision))
-print("recall = " + str(recall))
-f1Score = 2 * (precision * recall)/(precision + recall)
-print("F1-Score = " + str(f1Score))
+# TP,TN,FP,FN = predict(testingData, testingOutput, theta)
+# print("True Positive = " + str(TP))
+# print("True Negative = " + str(TN))
+# print("False Positive = " + str(FP))
+# print("False Negative = " + str(FN))
+# print("Total = " + str(TP+TN+FP+FN))
+
+# precision = TP/(TP + FP)
+# recall = TP/(TP + FN)
+# print("precision = " + str(precision))
+# print("recall = " + str(recall))
+# f1Score = 2 * (precision * recall)/(precision + recall)
+# print("F1-Score = " + str(f1Score))
