@@ -2,58 +2,81 @@ import os
 import pandas as pd
 import numpy as np
 
-vocab = {}
-vocabNum = 0
+vocabTraining = {}
+vocabTesting = {}
+vocabNumTraining = 0
+vocabNumTesting = 0
+trainingFileN = []
+trainingFileS = []
+testingFileN = []
+testingFileS = []
+trainingOutput = []
+testingOutput = []
 
-normalFileName = []
-spamFileName = []
-normalOutput = []
-spamOutput = []
+def readFileTraining(path):
+    infile=open(path,'r')
+    global vocabTraining
+    global vocabNumTraining
+    for w in infile.read().split():
+        if w not in vocabTraining:
+            vocabTraining[w] = vocabNumTraining
+            vocabNumTraining += 1
+        # w.lower()
+        # if w.lower() not in vocab:
+        #     vocab[w.lower()] = vocabNum
+        #     vocabNum += 1
 
-normalFileNameTest = []
-spamFileNameTest = []
-normalOutputTest = []
-spamOutputTest = []
+def readFileTesting(path):
+    infile=open(path,'r')
+    global vocabNumTesting
+    global vocabTesting
+    for w in infile.read().split():
+        if w not in vocabTesting:
+            vocabTesting[w] = vocabNumTesting
+            vocabNumTesting += 1
 
-trainingFile = []
-trainingOutputFile = []
-testingFile = []
-testingOutputFile = []
+def readEachFile():
+    normalEmailList =  os.listdir("email/normal/")
+    spamEmailList =  os.listdir("email/spam/")
+
+    # Random number
+    testingIndex = [5,2,11,4,17]
+    testingIndex2 = [3,2,8,10,9]
+    # Remove 5 elements from each list according to the number in the list above.
+    # Then use those removed list to create another testing vocab dictionary
+    for x in (testingIndex):
+        readFileTesting("email/normal/" + normalEmailList[x])
+        testingFileN.append("email/normal/" + normalEmailList[x])
+        del normalEmailList[x]
+    for y in (testingIndex2):
+        readFileTesting("email/spam/" + spamEmailList[y])
+        testingFileS.append("email/spam/" + spamEmailList[y])
+        del spamEmailList[y]
+    
+    # Read each files and add them to vocab dictionary
+    for i in normalEmailList:
+        readFileTraining("email/normal/" + i)
+        trainingFileN.append("email/normal/" + i)
+    for j in spamEmailList:
+        readFileTraining("email/spam/" + j)
+        trainingFileS.append("email/spam/" + i)
 
 def readFile(path):
-    infile=open(path,'r')
-    global vocab
-    global vocabNum
-    for w in infile.read().split():
-        if w not in vocab:
-            vocab[w] = vocabNum
-            vocabNum += 1
-
-def readFileForWord(path):
     sList = []
     infile=open(path,'r')
     for w in infile.read().split():
         sList.append(w)
     return sList
 
-def readEachFile():
-    normalEmailList =  os.listdir("email/normal/")
-    spamEmailList =  os.listdir("email/spam/")
-    # Remove 5 elements from each list according to the number in the list above.
-    # Then use those removed list to create another testing vocab dictionary
-    for name in normalEmailList:
-        normalFileName.append("email/normal/" + name)
-        normalOutput.append(0)
-        readFile("email/normal/" + name)
-    for name in spamEmailList:
-        spamFileName.append("email/spam/" + name)
-        spamOutput.append(1)
-        readFile("email/spam/" + name)
-
 def wordOfVector(dic, pathList):
     sentenceWoV = []
+    sentenceOutput = []
     for p in pathList:
-        pList = readFileForWord(p)
+        if 'spam' in p:
+            sentenceOutput.append(1)
+        elif 'normal' in p:
+            sentenceOutput.append(0)
+        pList = readFile(p)
         sen = []
         for k in dic:
             if k in pList:
@@ -61,7 +84,7 @@ def wordOfVector(dic, pathList):
             else:
                 sen.append(0)
         sentenceWoV.append(sen)
-    return sentenceWoV
+    return sentenceWoV, sentenceOutput
 
 def h(x, t, index):
     thetaX = np.dot(np.transpose(t),x[index])
@@ -102,30 +125,19 @@ def predict(x, y, t):
     return TP,TN,FP,FN
 
 readEachFile()
-df = pd.DataFrame(list(vocab.items()), columns = ['Key','Value'])
+dfTraining = pd.DataFrame(list(vocabTraining.items()), columns = ['Key','Value'])
+dfTesting = pd.DataFrame(list(vocabTesting.items()), columns = ['Key','Value'])
 
-# Random number index
-normalIndex = [5,2,11,4,17]
-spamIndex = [3,2,8,10,9]
-# Select random file at random index, then put them in testing set, and finally take it out of the original list.
-for i, j in zip(normalIndex, spamIndex):
-    normalFileNameTest.append(normalFileName[i])
-    spamFileNameTest.append(spamFileName[j])
-    normalOutputTest.append(normalOutput[i])
-    spamOutputTest.append(spamOutput[j])
-    del normalFileName[i]
-    del spamFileName[j]
-    del normalOutput[i]
-    del spamOutput[j]
-
-classifiedSentences = (wordOfVector(vocab, (normalFileName + spamFileName)))
+classifiedSentences, trainingOutput = (wordOfVector(vocabTraining, (trainingFileN + trainingFileS)))
 newClassifiedSentences = []
 for i in classifiedSentences:
     x = i
     x.insert(0, 1)
     newClassifiedSentences.append(x)
 
-classifiedSentencesTR = (wordOfVector(vocab, (normalFileNameTest + spamFileNameTest)))
+sentencesNpArray = np.asarray(newClassifiedSentences)
+
+classifiedSentencesTR, testingOutput = (wordOfVector(vocabTesting, (testingFileN + testingFileS)))
 newClassifiedSentencesTR = []
 for i in classifiedSentencesTR:
     x = i
@@ -133,32 +145,21 @@ for i in classifiedSentencesTR:
     newClassifiedSentencesTR.append(x)
 
 sentencesNpArray = np.asarray(newClassifiedSentences)
-sentencesNpArrayOutput = np.asarray(normalOutput + spamOutput)
 sentencesNpArrayTR = np.asarray(newClassifiedSentencesTR)
-sentencesNpArrayOutputTR = np.asarray(normalOutputTest + spamOutputTest)
-print(normalOutputTest + spamOutputTest)
-# print(sentencesNpArray)
-# print(sentencesNpArrayOutput)
-# print(sentencesNpArrayTR)
-# print(sentencesNpArrayOutputTR)
-# print(len(sentencesNpArray))
-# print(len(sentencesNpArrayOutput))
-# print(len(sentencesNpArrayTR))
-# print(len(sentencesNpArrayOutputTR))
 
-ranTheta = [.5] * (len(sentencesNpArray[0]))
-theta = np.asarray(ranTheta)
-alpha = .9
-iteration = 50
+ranTheta = [.5] * newClassifiedSentences
+theta = np.asarray([.5,.5,.5,.5])
+alpha = .005
+iteration = 400
 
 print('Maximum Likelihood Estimation with normal Data')
 print("Alpha = " + str(alpha))
 print("Iteration = " + str(iteration))
-theta = train(iteration, classifiedSentences, sentencesNpArrayOutput, alpha, theta)
+theta = train(iteration, classifiedSentences, trainingOutput, alpha, theta)
 print('Theta = ', end = '')
 print(theta)
 
-TP,TN,FP,FN = predict(classifiedSentencesTR, sentencesNpArrayOutputTR, theta)
+TP,TN,FP,FN = predict(classifiedSentencesTR, testingOutput, theta)
 print("True Positive = " + str(TP))
 print("True Negative = " + str(TN))
 print("False Positive = " + str(FP))
