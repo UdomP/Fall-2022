@@ -7,8 +7,10 @@ import re
 # nltk.download ()
 
 vocab = {}
+vocabTest = {}
 vocabNum = 0
 allWordCount = 0
+
 normalFileName = []
 spamFileName = []
 normalOutput = []
@@ -23,7 +25,7 @@ wordCount = 0
 wordCountNormal = 0
 wordCountSpam = 0
 
-stopwords = ['hi', 'ourselves', 'an', 'or', 'nor', 'yourself', 'own', 'their', 'any', "should've", 'to', 'there', 'more', 'mustn', 'shan', 'she', 're', "haven't", 'why', 'few', 'were', 'but', "don't", 'doing', "didn't", 'am', 'won', 'ours', 'down', 'most', 'only', 'how', 'did', 'when', 'couldn', 'as', 'ain', "mustn't", 'aren', 'myself', 'below', 'at', 'me', 'further', 'other', "you're", 'just', 'y', 'same', 'than', 'will', "couldn't", 'has', 'm', "won't", 'll', 'that', 'being', "weren't", 'with', 'until', 'above', 'we', 'such', 'not', 'can', 'during', 'haven', 'where', 'd', "you'll", "hasn't", 'weren', 'from', 'having', 'off', "it's", 'don', 'wouldn', 'theirs', "aren't", 'by', 'they', 'yours', 'your', 'now', 'hadn', 'shouldn', 'for', 'are', 'because', 'what', 'after', 'be', 'in', 'then', "shouldn't", 'is', 'the', 'you', 'which', 'through', 'hasn', "wouldn't", 'out', 'and', 'this', 'should', 'those', 'does', 'wasn', 'whom', 'before', 'o', 'him', 't', 'our', "isn't", "wasn't", 'had', 'herself', 'once', 'i', 've', 'under', 'ma', 'of', 'do', "mightn't", 'himself', 'my', 'yourselves', 'themselves', 'he', 'a', 'on', 'too', 'again', 'was', "hadn't", 'her', "that'll", "doesn't", 'these', 'isn', "you'd", 'both', 'didn', 'here', 'who', 'each', 'them', "needn't", 'while', 'very', 's', 'doesn', "shan't", 'mightn', 'against', 'no', 'about', 'all', 'needn', 'hers', 'its', 'itself', 'into', 'it', 'over', 'his', 'between', 'some', 'have', 'if', "you've", 'been', "she's", 'so', 'up']
+stopwords = ['ourselves', 'an', 'or', 'nor', 'yourself', 'own', 'their', 'any', "should've", 'to', 'there', 'more', 'mustn', 'shan', 'she', 're', "haven't", 'why', 'few', 'were', 'but', "don't", 'doing', "didn't", 'am', 'won', 'ours', 'down', 'most', 'only', 'how', 'did', 'when', 'couldn', 'as', 'ain', "mustn't", 'aren', 'myself', 'below', 'at', 'me', 'further', 'other', "you're", 'just', 'y', 'same', 'than', 'will', "couldn't", 'has', 'm', "won't", 'll', 'that', 'being', "weren't", 'with', 'until', 'above', 'we', 'such', 'not', 'can', 'during', 'haven', 'where', 'd', "you'll", "hasn't", 'weren', 'from', 'having', 'off', "it's", 'don', 'wouldn', 'theirs', "aren't", 'by', 'they', 'yours', 'your', 'now', 'hadn', 'shouldn', 'for', 'are', 'because', 'what', 'after', 'be', 'in', 'then', "shouldn't", 'is', 'the', 'you', 'which', 'through', 'hasn', "wouldn't", 'out', 'and', 'this', 'should', 'those', 'does', 'wasn', 'whom', 'before', 'o', 'him', 't', 'our', "isn't", "wasn't", 'had', 'herself', 'once', 'i', 've', 'under', 'ma', 'of', 'do', "mightn't", 'himself', 'my', 'yourselves', 'themselves', 'he', 'a', 'on', 'too', 'again', 'was', "hadn't", 'her', "that'll", "doesn't", 'these', 'isn', "you'd", 'both', 'didn', 'here', 'who', 'each', 'them', "needn't", 'while', 'very', 's', 'doesn', "shan't", 'mightn', 'against', 'no', 'about', 'all', 'needn', 'hers', 'its', 'itself', 'into', 'it', 'over', 'his', 'between', 'some', 'have', 'if', "you've", 'been', "she's", 'so', 'up']
 regex = re.compile('[@_!#$%^&*()<>?/\|}{~:]')
 
 def readFile(path):
@@ -33,11 +35,11 @@ def readFile(path):
     global allWordCount
     global wordCount
     for w in infile.read().split():
-        # if (w not in vocab) and (regex.search(w) == None) and (w not in stopwords):
-        if (w not in vocab) and (regex.search(w) == None):
+        if (w not in vocab) and (regex.search(w) == None) and (w not in stopwords):
+        # if (w not in vocab):
             vocab[w] = vocabNum
             vocabNum += 1
-        allWordCount += 1
+            allWordCount += 1
         wordCount += 1
 
 def readFileForWord(path):
@@ -50,21 +52,34 @@ def readFileForWord(path):
 def readEachFile():
     normalEmailList =  os.listdir("email/normal/")
     spamEmailList =  os.listdir("email/spam/")
+
+    # Random list for testing
+    normalIndex = ['email/normal/2.txt', 'email/normal/12.txt', 'email/normal/7.txt', 'email/normal/16.txt', 'email/normal/21.txt']
+    spamIndex = ['email/spam/2.txt', 'email/spam/14.txt', 'email/spam/10.txt', 'email/spam/5.txt', 'email/spam/22.txt']
+
     global wordCount
     global wordCountNormal
     global wordCountSpam
     # Remove 5 elements from each list according to the number in the list above.
     # Then use those removed list to create another testing vocab dictionary
     for name in normalEmailList:
-        normalFileName.append("email/normal/" + name)
-        normalOutput.append(0)
-        readFile("email/normal/" + name)
+        if ("email/normal/" + name) not in normalIndex:
+            normalFileName.append("email/normal/" + name)
+            normalOutput.append(0)
+            readFile("email/normal/" + name)
+        else:
+            normalFileNameTest.append("email/normal/" + name)
+            normalOutputTest.append(0)
     wordCountNormal = wordCount
     wordCount = 0
     for name in spamEmailList:
-        spamFileName.append("email/spam/" + name)
-        spamOutput.append(1)
-        readFile("email/spam/" + name)
+        if ("email/spam/" + name) not in spamIndex:
+            spamFileName.append("email/spam/" + name)
+            spamOutput.append(1)
+            readFile("email/spam/" + name)
+        else:
+            spamFileNameTest.append("email/spam/" + name)
+            spamOutputTest.append(1)
     wordCountSpam = wordCount
     wordCount = 0
 
@@ -82,7 +97,6 @@ def wordOfVector(dic, pathList):
     return sentenceWoV
 
 def bagOfWord(dic, pathList):
-    print(pathList)
     sentenceBOW = {}
     for p in pathList:
         pList = readFileForWord(p)
@@ -119,20 +133,6 @@ def predict(x0, x1, y):
 
 df = pd.DataFrame(list(vocab.items()), columns = ['Key','Value'])
 
-# Random number index
-normalIndex = [1,2,3,4,9]
-spamIndex = [3,3,1,10,8]
-# Select random file at random index, then put them in testing set, and finally take it out of the original list.
-for i, j in zip(normalIndex, spamIndex):
-    normalFileNameTest.append(normalFileName[i])
-    spamFileNameTest.append(spamFileName[j])
-    normalOutputTest.append(normalOutput[i])
-    spamOutputTest.append(spamOutput[j])
-    del normalFileName[i]
-    del spamFileName[j]
-    del normalOutput[i]
-    del spamOutput[j]
-
 classifiedSentences = (bagOfWord(vocab, (normalFileName + spamFileName)))
 classifiedSentencesTR = (bagOfWord(vocab, (normalFileNameTest + spamFileNameTest)))
 
@@ -140,6 +140,11 @@ vocabLen = len(vocab)
 totalSize = len(normalFileName + spamFileName + normalFileNameTest + spamFileNameTest)
 pclass1 = len(spamFileName + spamFileNameTest)
 pclass0 = len(normalFileName+ normalFileNameTest)
+# print(vocab)
+print(vocabLen)
+print(totalSize)
+print(pclass0)
+print(pclass1)
 
 def p(total, vocabS, voc, wc):
     t = 0
@@ -157,18 +162,16 @@ def NaiveBayes(classList, probY, wc):
         probList.append(prob)
     return probList
 
+# print(classifiedSentencesTR)
+
+lmda = 1
+
+print(wordCountNormal)
+print(wordCountSpam)
 y1 = NaiveBayes(classifiedSentencesTR, pclass1, wordCountSpam)
 y0 = NaiveBayes(classifiedSentencesTR, pclass0, wordCountNormal)
 
-print("File being tested : ", end = "")
-print(normalFileNameTest + spamFileNameTest)
-print("Vocab length/unique word = " + str(vocabLen))
-print("All word counted = " + str(allWordCount))
-print("All word count in normal email = " + str(wordCountNormal))
-print("All word count in spam email = " + str(wordCountSpam))
-print("Prob(y = 0) : ", end = "")
 print(y0)
-print("Prob(y = 1) : ", end = "")
 print(y1)
 print("testing", end = " ")
 print(normalFileNameTest + spamFileNameTest)
@@ -186,3 +189,8 @@ print("precision = " + str(precision))
 print("recall = " + str(recall))
 f1Score = 2 * (precision * recall)/(precision + recall)
 print("F1-Score = " + str(f1Score))
+
+print(allWordCount)
+print(wordCountNormal)
+print(wordCountSpam)
+print(vocab)

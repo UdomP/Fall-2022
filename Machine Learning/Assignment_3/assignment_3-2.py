@@ -151,6 +151,9 @@ theta = np.asarray(ranTheta)
 alpha = .9
 iteration = 50
 
+print(classifiedSentences)
+
+
 print('Maximum Likelihood Estimation with normal Data')
 print("Alpha = " + str(alpha))
 print("Iteration = " + str(iteration))
