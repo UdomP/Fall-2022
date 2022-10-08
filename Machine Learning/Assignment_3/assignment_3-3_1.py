@@ -7,6 +7,7 @@ import re
 # nltk.download ()
 
 vocab = {}
+vocab1 = {}
 vocabTest = {}
 vocabNum = 0
 allWordCount = 0
@@ -39,14 +40,15 @@ def readFile(path):
         # if (w not in vocab):
             vocab[w] = vocabNum
             vocabNum += 1
-            allWordCount += 1
+        allWordCount += 1
         wordCount += 1
 
 def readFileForWord(path):
     sList = []
     infile=open(path,'r')
     for w in infile.read().split():
-        sList.append(w)
+        if (regex.search(w) == None) and (w not in stopwords):
+            sList.append(w)
     return sList
 
 def readEachFile():
@@ -107,90 +109,64 @@ def bagOfWord(dic, pathList):
         sentenceBOW[p] = sen
     return sentenceBOW
 
-readEachFile()
+def countWord(pathList):
+    l = 0
+    for p in pathList:
+        pList = readFileForWord(p)
+        l += len(pList)
+    return l
 
-def predict(x0, x1, y):
-    TP = 0
-    TN = 0
-    FP = 0
-    FN = 0
-    for i in range(len(y)):
-        actual = y[i]
-        predict = 0
-        if x0[i] >= x1[i]:
-            predict = 0
-        else:
-            predict = 1
-        if(actual == 1 and predict == 1):
-            TP += 1
-        elif(actual == 0 and predict == 0):
-            TN += 1
-        elif(actual == 0 and predict == 1):
-            FP += 1
-        elif(actual == 1 and predict == 0):
-            FN += 1
-    return TP,TN,FP,FN
+# def p(wc, bow, lmda, sj):
+#     pp = 1
+#     for b in bow.values():
+#         pp *= ((b + lmda)/(wc + (sj * lmda)))
+#     return pp
+
+
+# def NaiveBayes(BOW, lmda, k, sj, wc, tot):
+#     probList = []
+#     for b in BOW:
+#         prob = p(wc, BOW[b], lmda, sj) * ((wc + lmda)/(tot + (k * lmda)))
+#         probList.append(prob)
+#     return probList
+
+def p(wc, bow, lmda, sj):
+    pp = 0
+    for b in bow.values():
+        pp += np.log((b + lmda)/(wc + (sj * lmda)))
+    return pp
+
+
+def NaiveBayes(BOW, lmda, k, sj, wc, tot):
+    probList = []
+    for b in BOW:
+        prob = p(wc, BOW[b], lmda, sj) + np.log((wc + lmda)/(tot + (k * lmda)))
+        probList.append(prob)
+    return probList
+
+readEachFile()
 
 df = pd.DataFrame(list(vocab.items()), columns = ['Key','Value'])
 
 classifiedSentences = (bagOfWord(vocab, (normalFileName + spamFileName)))
 classifiedSentencesTR = (bagOfWord(vocab, (normalFileNameTest + spamFileNameTest)))
+tw = countWord(normalFileName + normalFileNameTest + spamFileName + spamFileNameTest)
+ln = countWord(normalFileName + normalFileNameTest)
+ls = countWord(spamFileName + spamFileNameTest)
 
-vocabLen = len(vocab)
-totalSize = len(normalFileName + spamFileName + normalFileNameTest + spamFileNameTest)
-pclass1 = len(spamFileName + spamFileNameTest)
-pclass0 = len(normalFileName+ normalFileNameTest)
-# print(vocab)
-print(vocabLen)
-print(totalSize)
-print(pclass0)
-print(pclass1)
-
-def p(total, vocabS, voc, wc):
-    t = 0
-    for w in voc:
-        t += np.log((voc[w] + 1)/(wc + vocabS))
-        # t += np.log10((voc[w] + 1)/(wc + vocabS))
-    return t
-
-def NaiveBayes(classList, probY, wc):
-    probList = []
-    for cls in classList:
-        # prob = np.log10(probY/42) + (p(allWordCount, vocabLen, classList[cls], wc))
-        prob = np.log(1/2) + p(1,vocabLen ,classList[cls], wc)
-        # prob = np.log(wc/allWordCount) + p(1,vocabLen ,classList[cls], wc)
-        probList.append(prob)
-    return probList
-
-# print(classifiedSentencesTR)
+print((tw))
+print((ln))
+print((ls))
+print("Vocab length/unique word = " + str(len(vocab)))
+print("All word counted = " + str(allWordCount))
+print("All word count in normal email = " + str(wordCountNormal))
+print("All word count in spam email = " + str(wordCountSpam))
 
 lmda = 1
-
-print(wordCountNormal)
-print(wordCountSpam)
-y1 = NaiveBayes(classifiedSentencesTR, pclass1, wordCountSpam)
-y0 = NaiveBayes(classifiedSentencesTR, pclass0, wordCountNormal)
+k = 2
+sj = len(vocab)
+y1 = NaiveBayes(classifiedSentencesTR, lmda, k, sj, ls, tw)
+y0 = NaiveBayes(classifiedSentencesTR, lmda, k, sj, ln, tw)
 
 print(y0)
 print(y1)
-print("testing", end = " ")
-print(normalFileNameTest + spamFileNameTest)
-
-TP,TN,FP,FN = predict(y0, y1, (normalOutputTest + spamOutputTest))
-print("True Positive = " + str(TP))
-print("True Negative = " + str(TN))
-print("False Positive = " + str(FP))
-print("False Negative = " + str(FN))
-print("Total = " + str(TP+TN+FP+FN))
-
-precision = TP/(TP + FP)
-recall = TP/(TP + FN)
-print("precision = " + str(precision))
-print("recall = " + str(recall))
-f1Score = 2 * (precision * recall)/(precision + recall)
-print("F1-Score = " + str(f1Score))
-
-print(allWordCount)
-print(wordCountNormal)
-print(wordCountSpam)
-print(vocab)
