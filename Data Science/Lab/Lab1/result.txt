@@ -1,0 +1,3 @@
+Mean and standard deviation of Gaussian of Atlantic salmon are 28.764705882352946 and 1.7583217856041322.
+Mean and standard deviation of Gaussian of Largemouth bass are 17.52548387096774 and 2.827788191536181.
+Mean and standard deviation of Gaussian of Rainbow trout are 12.606382978723405 and 10.495822963594353.
