@@ -9,7 +9,7 @@ def twoSum(A, x):
     print('no, it is not')
 
 A=[1,2,3,4,5,6,7]
-X = 8
+X = 14
 print(A)
 print('X = ' + str(X))
 twoSum(A, X)

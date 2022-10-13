@@ -12,6 +12,7 @@ def extract_data_salmon(filename):
             continue
         if (n >= 0) and (n <= 100):
             fish.append(n)
+    infile.close()
     return np.mean(fish), np.std(fish)
 
 
@@ -30,6 +31,7 @@ def extract_data_bass(filename):
                 continue
             if (n >= 0) and (n <= 100):
                 fish.append(n)
+    infile.close()
     return np.mean(fish), np.std(fish)
 
 def extract_data_trout(filename): 
@@ -45,6 +47,7 @@ def extract_data_trout(filename):
             continue
         if (n >= 0) and (n <= 100):
             fish.append(n)
+    infile.close()
     return np.mean(fish), np.std(fish)
 
 mean1, std1 = extract_data_salmon('Atlantic_salmon.txt') 
