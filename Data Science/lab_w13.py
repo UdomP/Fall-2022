@@ -70,7 +70,7 @@ print(np.abs(f0 - f1))
 print(np.sum(np.abs(f0 - f1)))
 
 l2Dist1 = np.sum(np.abs(f0 - f1))
-l2Dist1 = np.sum(np.abs(f0 - f2))
+l2Dist2 = np.sum(np.abs(f0 - f2))
 
 print(l2Dist1)
 print(l2Dist2)
@@ -85,3 +85,13 @@ print(np.sum(softmax))
 linear_prob = np.array(z)/ np.sum(np.array(z))
 print(linear_prob)
 print(np.sum(linear_prob))
+
+print('lollollollollollollolloll')
+
+a = np.array([1,2,3], [4,5,6])
+b = np.array([], [])
+
+
+np.vstack
+np.linalg.eig
+a.flatten
