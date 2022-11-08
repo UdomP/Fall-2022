@@ -25,7 +25,8 @@ for cd in crabData:
     crabDicTraining[cd] = crabData[cd][:int(crabDataSize*.9)]
     crabDicTesting[cd] = crabData[cd][int(crabDataSize*.9):]
 # ['Sex', 'Length', 'Diameter', 'Height', 'Weight', 'Shucked Weight', 'Viscera Weight', 'Shell Weight', 'Age']
-featureList = ['Length', 'Diameter', 'Height', 'Weight', 'Shucked Weight', 'Viscera Weight', 'Shell Weight']
+# featureList = ['Length', 'Diameter', 'Height', 'Weight', 'Shucked Weight', 'Viscera Weight', 'Shell Weight']
+featureList = ['Length', 'Height']
 
 trainingLen = int(crabDataSize*.9)
 testingLen = int(crabDataSize*.1)
@@ -35,13 +36,16 @@ OutputDataTraining = [crabDicTraining['Age']]
 OutputDataTesting = [crabDicTesting['Age']]
 
 training = np.array(featureDataTraining)
-print(featureList)
+output = np.array(OutputDataTraining)
 
 nnLayerLen = 3
 nnFeatureLen = len(featureList)
 
 thetaMatrix = np.ones((nnFeatureLen, 1)) * .5
 weightMatrix = np.ones((nnFeatureLen, nnFeatureLen)) * .5
+weightMatrix2 = np.ones((nnFeatureLen, nnFeatureLen)) * .5
+weightMatrix3 = np.ones((1, nnFeatureLen)) * .5
+
 # weightMatrix = np.random.uniform(0,1,(nnFeatureLen, nnFeatureLen))
 zMatrix = np.zeros((nnFeatureLen, 1))
 
@@ -61,6 +65,9 @@ def fx(zM):
     temp = np.exp(-zM)
     return 1/(1+temp)
 
+def yHat(w, a):
+    return w @ a
+
 # def J(y, w, x):
 #     tempY = y.copy()
 #     tempW = w.copy()
@@ -72,16 +79,20 @@ def fx(zM):
 #         tempW[i,:] *= 
 #         print(tempY[i])
 
-def J(x , a):
-    temp = np.abs(x - a)
+def J(y, yHat):
+    temp = np.abs(y - yHat)
     return  0.5 * (temp**2)
 
 for i in range(trainingLen):
     tempTraining = training[:, i].reshape(len(training),1)
+    tempOutput = output[:, i].reshape(len(output),1)
+
     z = getZ(weightMatrix, training[:, i])
     a = fx(z)
-    j = J(tempTraining, a)
-    thetaMatrix -= alpha * j
-
-print(thetaMatrix)
-print(thetaMatrix.shape)
+    
+    z2 = getZ(weightMatrix2, a)
+    a2 = fx(z2)
+    yh = yHat(weightMatrix3, a2)
+    j = J(tempOutput, yh)
+    print(yh)
+    print(j)
