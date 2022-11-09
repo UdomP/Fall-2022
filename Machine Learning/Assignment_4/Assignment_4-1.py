@@ -25,7 +25,8 @@ for cd in crabData:
     crabDicTraining[cd] = crabData[cd][:int(crabDataSize*.9)]
     crabDicTesting[cd] = crabData[cd][int(crabDataSize*.9):]
 # ['Sex', 'Length', 'Diameter', 'Height', 'Weight', 'Shucked Weight', 'Viscera Weight', 'Shell Weight', 'Age']
-featureList = ['Length', 'Diameter', 'Height', 'Weight', 'Shucked Weight', 'Viscera Weight', 'Shell Weight']
+# featureList = ['Length', 'Diameter', 'Height', 'Weight', 'Shucked Weight', 'Viscera Weight', 'Shell Weight']
+featureList = ['Sex', 'Length', 'Diameter', 'Height', 'Weight', 'Shucked Weight', 'Viscera Weight', 'Shell Weight']
 # featureList = ['Length', 'Height']
 
 trainingLen = int(crabDataSize*.9)
@@ -37,6 +38,8 @@ OutputDataTesting = [crabDicTesting['Age']]
 
 training = np.array(featureDataTraining)
 output = np.array(OutputDataTraining)
+trainingTest = np.array(featureDataTesting)
+outputTest = np.array(OutputDataTesting)
 
 nnLayerLen = 3
 nnFeatureLen = len(featureList)
@@ -82,7 +85,7 @@ def layer1Update(w1, w2, w3, z1, z2, x, y, yhat):
         for colIndex, col in enumerate(row):
             s = 0
             for i in range(nnFeatureLen):
-                s += w3[0][i] * sigmoid(z2[i]) * (1 - sigmoid(z2[i])) * w2[rowIndex][i]
+                s += w3[0][i] * (sigmoid(z2[i]) * (1 - sigmoid(z2[i]))) * w2[rowIndex][i]
                 # s += w3[0][i]
                 # s += sigmoid(z2[i])
                 # s += (1 - sigmoid(z2[i]))
@@ -90,10 +93,26 @@ def layer1Update(w1, w2, w3, z1, z2, x, y, yhat):
             tempW1[rowIndex][colIndex] = const * s
     return tempW1
 
-def layer2Update(w1, w2, w3, z1, z2, x, y, yhat):
+def layer2Update(w2, w3, z2, y, yhat):
     tempW2 = w2.copy()
     for rowIndex, row in enumerate(w2):
+        jz = yhat - y
+        const = jz
         for colIndex, col in enumerate(row):
+            s = 0
+            for i in range(nnFeatureLen):
+                s += w3[0][i] * (sigmoid(z2[i]) * (1 - sigmoid(z2[i]))) * col # w2[rowIndex][i]
+            tempW2[rowIndex][colIndex] = const * s
+    return tempW2
+
+def layer3Update(w3, y, yhat):
+    tempW3 = w3.copy()
+    for rowIndex, row in enumerate(w3):
+        jz = yhat - y
+        const = jz
+        for colIndex, col in enumerate(row):
+            tempW3[rowIndex][colIndex] = const * col
+    return tempW3
 
 # def J(y, w, x):
 #     tempY = y.copy()
@@ -110,12 +129,45 @@ def J(y, yHat):
     temp = np.abs(y - yHat)
     return  0.5 * (temp**2)
 
+print(weightMatrix)
+print(weightMatrix2)
+print(weightMatrix3)
+
 def neuralNetwork():
     j = 0
     for i in range(trainingLen):
         tempTraining = training[:, i].reshape(len(training),1)
         tempOutput = output[:, i].reshape(len(output),1)
         global weightMatrix
+        global weightMatrix2
+        global weightMatrix3
+
+        z = getZ(weightMatrix, tempTraining)
+        a = fx(z)
+
+        z2 = getZ(weightMatrix2, a)
+        a2 = fx(z2)
+        
+        z3 = yHat(weightMatrix3, a2)
+        yh = J(tempOutput, z3)
+        # print(yh)
+        # print(j)
+        tempWeight1 = layer1Update(weightMatrix, weightMatrix2, weightMatrix3, z, z2, tempTraining, tempOutput, yh)
+        weightMatrix = weightMatrix - (alpha * tempWeight1)
+        tempWeight2 = layer2Update(weightMatrix2, weightMatrix3, z2, tempOutput, yh)
+        weightMatrix2 = weightMatrix2 - (alpha * tempWeight2)
+        # tempWeight3 = layer3Update(weightMatrix3, tempOutput, yh)
+        # weightMatrix3 = weightMatrix3 - (alpha * tempWeight3)
+    return j
+
+def neuralNetworkTest():
+    j = 0
+    for i in range(trainingLen):
+        tempTraining = trainingTest[:, i].reshape(len(trainingTest),1)
+        tempOutput = outputTest[:, i].reshape(len(outputTest),1)
+        global weightMatrix
+        global weightMatrix2
+        global weightMatrix3
 
         z = getZ(weightMatrix, tempTraining)
         a = fx(z)
@@ -127,8 +179,18 @@ def neuralNetwork():
         j = J(tempOutput, yh)
         # print(yh)
         # print(j)
-        tempWeight = layer1Update(weightMatrix, weightMatrix2, weightMatrix3, z, z2, tempTraining, tempOutput, yh)
-        weightMatrix = weightMatrix - (alpha * tempWeight)
+        tempWeight1 = layer1Update(weightMatrix, weightMatrix2, weightMatrix3, z, z2, tempTraining, tempOutput, yh)
+        weightMatrix = weightMatrix - (alpha * tempWeight1)
+        tempWeight2 = layer2Update(weightMatrix2, weightMatrix3, z2, tempOutput, yh)
+        weightMatrix2 = weightMatrix2 - (alpha * tempWeight2)
+        tempWeight3 = layer3Update(weightMatrix3, tempOutput, yh)
+        weightMatrix3 = weightMatrix3 - (alpha * tempWeight3)
+        print(tempOutput, j)
     return j
 
 print(neuralNetwork())
+print(weightMatrix)
+print(weightMatrix2)
+print(weightMatrix3)
+
+neuralNetworkTest()
