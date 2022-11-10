@@ -26,7 +26,8 @@ for cd in crabData:
     crabDicTesting[cd] = crabData[cd][int(crabDataSize*.9):]
 # ['Sex', 'Length', 'Diameter', 'Height', 'Weight', 'Shucked Weight', 'Viscera Weight', 'Shell Weight', 'Age']
 # featureList = ['Length', 'Diameter', 'Height', 'Weight', 'Shucked Weight', 'Viscera Weight', 'Shell Weight']
-featureList = ['Sex', 'Length', 'Diameter', 'Height', 'Weight', 'Shucked Weight', 'Viscera Weight', 'Shell Weight']
+featureList = ['Length', 'Diameter', 'Height', 'Weight']
+# featureList = ['Sex', 'Length', 'Diameter', 'Height', 'Weight', 'Shucked Weight', 'Viscera Weight', 'Shell Weight']
 # featureList = ['Length', 'Height']
 
 trainingLen = int(crabDataSize*.9)
@@ -47,14 +48,14 @@ nnFeatureLen = len(featureList)
 thetaMatrix = np.ones((nnFeatureLen, 1)) * .5
 weightMatrix = np.ones((nnFeatureLen, nnFeatureLen)) * .5
 weightMatrix2 = np.ones((nnFeatureLen, nnFeatureLen)) * .5
-weightMatrix3 = np.ones((1, nnFeatureLen)) * .5
+weightMatrix3 = np.ones((1, nnFeatureLen))
 
 # weightMatrix = np.random.uniform(0,1,(nnFeatureLen, nnFeatureLen))
 # print(weightMatrix)
 zMatrix = np.zeros((nnFeatureLen, 1))
 
 JList = []
-alpha = 0.5
+alpha = 0.001
 
 ######################################## Data and Configurations #########################################################
 
@@ -74,6 +75,7 @@ def fx(zM):
 
 def yHat(w, a):
     return w @ a
+
 # , w2, w3, x, y, yhat, z1
 def layer1Update(w1, w2, w3, z1, z2, x, y, yhat):
     tempW1 = w1.copy()
@@ -111,19 +113,12 @@ def layer3Update(w3, y, yhat):
         jz = yhat - y
         const = jz
         for colIndex, col in enumerate(row):
-            tempW3[rowIndex][colIndex] = const * col
+            tempW3[rowIndex][colIndex] = col * const
     return tempW3
 
-# def J(y, w, x):
-#     tempY = y.copy()
-#     tempW = w.copy()
-#     tempX = x.copy()
-#     for i in range(len(y)):
-#         jy = y[i] - 1
-#         yz = y[i] * (1 - y[i])
-#         jz = jy * yz
-#         tempW[i,:] *= 
-#         print(tempY[i])
+def MSE(y, yh, n):
+    yy = (y - yh)**2
+    return np.sum(yy) * (1/n)
 
 def J(y, yHat):
     temp = np.abs(y - yHat)
@@ -149,7 +144,8 @@ def neuralNetwork():
         a2 = fx(z2)
         
         z3 = yHat(weightMatrix3, a2)
-        yh = J(tempOutput, z3)
+        a3 = fx(z3)
+        yh = J(tempOutput, a3)
         # print(yh)
         # print(j)
         tempWeight1 = layer1Update(weightMatrix, weightMatrix2, weightMatrix3, z, z2, tempTraining, tempOutput, yh)
@@ -161,8 +157,10 @@ def neuralNetwork():
     return j
 
 def neuralNetworkTest():
-    j = 0
-    for i in range(trainingLen):
+    yhList = []
+    yList = []
+    jList = []
+    for i in range(testingLen):
         tempTraining = trainingTest[:, i].reshape(len(trainingTest),1)
         tempOutput = outputTest[:, i].reshape(len(outputTest),1)
         global weightMatrix
@@ -175,22 +173,32 @@ def neuralNetworkTest():
         z2 = getZ(weightMatrix2, a)
         a2 = fx(z2)
         
-        yh = yHat(weightMatrix3, a2)
-        j = J(tempOutput, yh)
+        z3 = yHat(weightMatrix3, a2)
+        a3 = fx(z3)
+        yh = J(tempOutput, a3)
         # print(yh)
         # print(j)
         tempWeight1 = layer1Update(weightMatrix, weightMatrix2, weightMatrix3, z, z2, tempTraining, tempOutput, yh)
         weightMatrix = weightMatrix - (alpha * tempWeight1)
         tempWeight2 = layer2Update(weightMatrix2, weightMatrix3, z2, tempOutput, yh)
         weightMatrix2 = weightMatrix2 - (alpha * tempWeight2)
-        tempWeight3 = layer3Update(weightMatrix3, tempOutput, yh)
-        weightMatrix3 = weightMatrix3 - (alpha * tempWeight3)
-        print(tempOutput, j)
-    return j
+        # tempWeight3 = layer3Update(weightMatrix3, tempOutput, yh)
+        # weightMatrix3 = weightMatrix3 - (alpha * tempWeight3)
+        yhList.append(yh[0][0])
+        yList.append(tempOutput[0][0])
+    return yhList, yList, jList
 
-print(neuralNetwork())
+for i in range(10):
+    print(i)
+    neuralNetwork()
 print(weightMatrix)
 print(weightMatrix2)
 print(weightMatrix3)
 
-neuralNetworkTest()
+YhatList, YList, JList = neuralNetworkTest()
+
+print(YhatList)
+print(YList)
+
+print(MSE(np.array(YList), np.array(YhatList), testingLen))
+
