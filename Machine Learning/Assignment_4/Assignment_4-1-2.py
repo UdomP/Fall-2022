@@ -111,13 +111,13 @@ def layer2Update(w2, w3, z2, y, yhat):
             tempW2[rowIndex][colIndex] = const * s
     return tempW2
 
-def layer3Update(w3, y, yhat):
+def layer3Update(w3, y, yhat, a2):
     tempW3 = w3.copy()
     for rowIndex, row in enumerate(w3):
         jz = yhat - y
         const = jz
         for colIndex, col in enumerate(row):
-            tempW3[rowIndex][colIndex] = jz
+            tempW3[rowIndex][colIndex] = jz * a2[colIndex]
     return tempW3
 
 def MSE(y, yh, n):
@@ -147,16 +147,16 @@ def neuralNetwork():
         z2 = getZ(weightMatrix2, a)
         a2 = fx(z2)
         
-        yh = yHat(weightMatrix3, a2)
+        z3 = yHat(weightMatrix3, a2)
 
-        j = J(tempOutput, yh)
+        yh = J(tempOutput, z3)
         # print(yh)
         # print(j)
         tempWeight1 = layer1Update(weightMatrix, weightMatrix2, weightMatrix3, z, z2, tempTraining, tempOutput, yh)
         weightMatrix = weightMatrix - (alpha * tempWeight1)
         tempWeight2 = layer2Update(weightMatrix2, weightMatrix3, z2, tempOutput, yh)
         weightMatrix2 = weightMatrix2 - (alpha * tempWeight2)
-        tempWeight3 = layer3Update(weightMatrix3, tempOutput, yh)
+        tempWeight3 = layer3Update(weightMatrix3, tempOutput, yh, a2)
         weightMatrix3 = weightMatrix3 - (alpha * tempWeight3)
     return j
 
@@ -177,27 +177,25 @@ def neuralNetworkTest():
         z2 = getZ(weightMatrix2, a)
         a2 = fx(z2)
         
-        yh = yHat(weightMatrix3, a2)
+        z3 = yHat(weightMatrix3, a2)
 
-        j = J(tempOutput, yh)
-        # yh = J(tempOutput, z3)
+        yh = J(tempOutput, z3)
         # print(yh)
         # print(j)
         tempWeight1 = layer1Update(weightMatrix, weightMatrix2, weightMatrix3, z, z2, tempTraining, tempOutput, yh)
         weightMatrix = weightMatrix - (alpha * tempWeight1)
         tempWeight2 = layer2Update(weightMatrix2, weightMatrix3, z2, tempOutput, yh)
         weightMatrix2 = weightMatrix2 - (alpha * tempWeight2)
-        tempWeight3 = layer3Update(weightMatrix3, tempOutput, yh)
+        tempWeight3 = layer3Update(weightMatrix3, tempOutput, yh, a2)
         weightMatrix3 = weightMatrix3 - (alpha * tempWeight3)
         yhList.append(yh[0][0])
         yList.append(tempOutput[0][0])
         # jList.append(z3[0])
     return yhList, yList, jList
 
-for i in range(10):
+for i in range(1):
     print(i)
-    JJ = neuralNetwork()
-    print(JJ)
+    neuralNetwork()
 print(weightMatrix)
 print(weightMatrix2)
 print(weightMatrix3)
@@ -206,5 +204,7 @@ YhatList, YList, JList = neuralNetworkTest()
 
 print(YhatList)
 print(YList)
+print(JList)
 print(MSE(np.array(YList), np.array(YhatList), testingLen))
 # print(MSE(np.array(YList), np.array(JList), testingLen))
+
