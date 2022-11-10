@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 
 crabData = pd.read_csv('CrabAgePrediction.csv')
 crabDataSize = len(crabData)
@@ -49,7 +50,7 @@ thetaMatrix = np.ones((nnFeatureLen, 1)) * .5
 weightMatrix = np.ones((nnFeatureLen, nnFeatureLen)) * .5
 weightMatrix2 = np.ones((nnFeatureLen, nnFeatureLen)) * .5
 # weightMatrix3 = np.ones((nnFeatureLen, 1))
-weightMatrix3 = np.ones((1, nnFeatureLen))
+weightMatrix3 = np.ones((1, nnFeatureLen)) * .5
 
 # weightMatrix = np.random.uniform(0,1,(nnFeatureLen, nnFeatureLen))
 # print(weightMatrix)
@@ -117,7 +118,7 @@ def layer3Update(w3, y, yhat):
         jz = yhat - y
         const = jz
         for colIndex, col in enumerate(row):
-            tempW3[rowIndex][colIndex] = jz
+            tempW3[rowIndex][colIndex] = jz * col
     return tempW3
 
 def MSE(y, yh, n):
@@ -125,15 +126,25 @@ def MSE(y, yh, n):
     return np.sum(yy) * (1/n)
 
 def J(y, yHat):
-    temp = np.abs(y - yHat)
+    temp = (yHat - y)
     return  0.5 * (temp**2)
 
 print(weightMatrix)
 print(weightMatrix2)
 print(weightMatrix3)
 
+def graphJ(j):
+    plt.plot([j for j in range(len(j))], j.reshape(len(j)))
+    plt.xlabel('Number of iterations')
+    plt.ylabel('J(θ)')
+    plt.title('Neural Network For Every Iterations')
+    plt.legend(loc='upper left', fontsize='small')
+
+    plt.show()
+    plt.close()
+
 def neuralNetwork():
-    j = 0
+    j = []
     for i in range(trainingLen):
         tempTraining = training[:, i].reshape(len(training),1)
         tempOutput = output[:, i].reshape(len(output),1)
@@ -149,7 +160,7 @@ def neuralNetwork():
         
         yh = yHat(weightMatrix3, a2)
 
-        j = J(tempOutput, yh)
+        j.append(J(tempOutput, yh))
         # print(yh)
         # print(j)
         tempWeight1 = layer1Update(weightMatrix, weightMatrix2, weightMatrix3, z, z2, tempTraining, tempOutput, yh)
@@ -194,10 +205,10 @@ def neuralNetworkTest():
         # jList.append(z3[0])
     return yhList, yList, jList
 
-for i in range(10):
+JJ = []
+for i in range(1):
     print(i)
-    JJ = neuralNetwork()
-    print(JJ)
+    JJ.extend(neuralNetwork())
 print(weightMatrix)
 print(weightMatrix2)
 print(weightMatrix3)
@@ -208,3 +219,4 @@ print(YhatList)
 print(YList)
 print(MSE(np.array(YList), np.array(YhatList), testingLen))
 # print(MSE(np.array(YList), np.array(JList), testingLen))
+graphJ(np.array(JJ))
