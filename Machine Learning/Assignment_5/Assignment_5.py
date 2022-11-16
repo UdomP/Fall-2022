@@ -34,11 +34,14 @@ for i in range(len(data[0])):
     for c in range(len(newCol)):
         if math.isnan(newCol[c]):
             newCol[c] = mean
-            normData[:,i] = mean
+            normData[c][i] = mean
     normData[:,i] -= mean
     meanList.append(mean)
     tempList.append(newCol.tolist())
 
+normDataT = np.transpose(normData)
+print(normDataT.shape)
+print(normDataT[0].shape)
 print(data.shape)
 print(data[0].shape)
 print(data[0])
