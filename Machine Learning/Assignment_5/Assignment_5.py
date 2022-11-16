@@ -39,6 +39,12 @@ for i in range(len(data[0])):
     meanList.append(mean)
     tempList.append(newCol.tolist())
 
+print(data.shape)
+print(data[0].shape)
+print(data[0])
+# print(normData[0])
+exit(0)
+
 pMatrix = np.ones((D, M))
 print(pMatrix.shape)
 PC = normData @ pMatrix

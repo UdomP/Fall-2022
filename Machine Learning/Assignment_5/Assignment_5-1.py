@@ -40,22 +40,21 @@ for i in range(len(normData)):
     normData[i] -= mean
 
 normDataT = np.transpose(normData)
-
+print(data[0])
+print(normData[0])
+exit(0)
 principle = np.ones((N, M))
-print('YYYYYYYYYYYYY')
+
 Y = normData @ principle
-YT = np.transpose(Y)
+
 print(Y)
 print(Y.shape)
-print(YT)
-print(YT.shape)
-covNormData = np.cov(YT)
+
+covNormData = np.cov(Y)
 print(covNormData)
 print(covNormData.shape)
-det = linalg.det(covNormData)
-print('Det')
-print(det)
-print(det.shape)
+exit(0)
+
 eigValue, eigVector = linalg.eig(covNormData)
 print('eigen')
 print(eigValue)
@@ -80,11 +79,13 @@ for i in range(len(PCCov)):
 PCArray = np.array(PCList)
 print(PCArray)
 print(PCArray.shape)
-# PCSum = np.sum(PCArray)
-# nn = 0
-# s = 0
-# for a in PCArray:
-#     print(nn)
-#     s += a
-#     print((s/PCSum) * 100)
-#     nn += 1
+PCSum = np.sum(PCArray)
+nn = 0
+s = 0
+for a in PCArray:
+    s += a
+    p = (s/PCSum) * 100
+    if p >= 99:
+        print(nn)
+        print(p)
+    nn += 1
