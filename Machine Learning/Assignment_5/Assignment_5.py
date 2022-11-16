@@ -3,6 +3,7 @@ import math
 
 infile = open('secom.txt', 'r')
 d = []
+
 for w in infile.read().split('\n'):
     temp = []
     for ww in w.split(' '):
@@ -15,8 +16,9 @@ for w in infile.read().split('\n'):
 
 D = len(d[0])
 N = len(d)
-M = 1
+M = 10
 data = np.array(d)
+normData = data.copy()
 tempList = []
 meanList = []
 for i in range(len(data[0])):
@@ -32,25 +34,17 @@ for i in range(len(data[0])):
     for c in range(len(newCol)):
         if math.isnan(newCol[c]):
             newCol[c] = mean
+            normData[:,i] = mean
+    normData[:,i] -= mean
     meanList.append(mean)
     tempList.append(newCol.tolist())
 
-newData = np.array(tempList)
-for row in newData
+pMatrix = np.ones((D, M))
+print(pMatrix.shape)
+PC = normData @ pMatrix
+print(PC)
+print(PC.shape)
 
-
-
-print('data')
-print(data[:,1])
-print(len(data[:,1]))
-print(data.shape)
-print(normData[:,1])
-print(len(normData[:,1]))
-print(normData.shape)
-
-# meanData = np.mean(data, axis=0)
-# meanData.reshape(len(meanData), 1)
-# print(meanData.shape)
-# normData = np.subtract(data, meanData)
-# print(normData)
-# print(normData.shape)
+covNormData = np.cov(PC)
+print(covNormData)
+print(covNormData.shape)
