@@ -45,9 +45,9 @@ print('normalized data shape')
 print(normData.shape)
 print(normData[0].shape)
 
-principle = np.ones((N, M))
-print('PC shape')
-print(principle.shape)
+# principle = np.ones((N, M))
+# print('PC shape')
+# print(principle.shape)
 
 # Y = normData @ principle
 
@@ -95,7 +95,7 @@ s = 0
 for a in range(M):
     nn += 1
     s += PCList[a]
-    print((PCList[a]/PCSum) * 100, '\t', (s/PCSum) * 100)
+    # print((PCList[a]/PCSum) * 100, '\t', (s/PCSum) * 100)
     # print('variance: ', (PCList[a]/PCSum) * 100, '\tComulative variance: ', (s/PCSum) * 100)
-    # print('variance: ', (PCList[a]/PCSum) * 100, ' %', '\tComulative variance: ', (s/PCSum) * 100, ' %', '\tk = ', nn)
+    print('variance: ', (PCList[a]/PCSum) * 100, ' %', '\tComulative variance: ', (s/PCSum) * 100, ' %', '\tk = ', nn)
 
