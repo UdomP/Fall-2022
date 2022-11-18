@@ -37,11 +37,18 @@ for i in range(len(normData)):
         if math.isnan(normData[i][j]):
             data[i][j] = mean
             normData[i][j] = mean
+    print(normData)
+    print(normData[0])
+
     normData[i] -= mean
+    print(normData)
+    print(normData[0])
+    exit(0)
 
 normDataT = np.transpose(normData)
 
 print('normalized data shape')
+print(normData)
 print(normData.shape)
 print(normData[0].shape)
 
@@ -92,10 +99,14 @@ print(PCArray.shape)
 PCSum = np.sum(PCArray)
 nn = 0
 s = 0
-for a in range(M):
+for a in range(len(PCList)):
     nn += 1
     s += PCList[a]
     # print((PCList[a]/PCSum) * 100, '\t', (s/PCSum) * 100)
     # print('variance: ', (PCList[a]/PCSum) * 100, '\tComulative variance: ', (s/PCSum) * 100)
     print('variance: ', (PCList[a]/PCSum) * 100, ' %', '\tComulative variance: ', (s/PCSum) * 100, ' %', '\tk = ', nn)
+    if ((s/PCSum) * 100) >= 99:
+        break
 
+print(normData[0])
+print(data)

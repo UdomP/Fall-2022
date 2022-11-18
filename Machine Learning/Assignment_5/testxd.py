@@ -60,8 +60,8 @@ s = 0
 for a in range(len(PCList)):
     nn += 1
     s += PCList[a]
-    # print((PCList[a]/PCSum) * 100, '\t', (s/PCSum) * 100)
+    print((PCList[a]/PCSum) * 100, '\t', (s/PCSum) * 100)
     # print('variance: ', (PCList[a]/PCSum) * 100, '\tComulative variance: ', (s/PCSum) * 100)
-    print('variance: ', (PCList[a]/PCSum) * 100, ' %  \tComulative variance: ', (s/PCSum) * 100, ' %\tk = ', nn)
+    # print('variance: ', (PCList[a]/PCSum) * 100, ' %', '\tComulative variance: ', (s/PCSum) * 100, ' %', '\tk = ', nn)
     if ((s/PCSum) * 100) >= 99:
         break
