@@ -39,7 +39,7 @@ print(normDataT.shape)
 newX = normDataT @ eigVector
 print('new X')
 # print(newX)
-print(normData.shape)
+# print(normData.shape)
 print(newX.shape)
 
 PCCov = np.cov(np.transpose(newX))
@@ -51,7 +51,9 @@ PCList = []
 for i in range(len(PCCov)):
     PCList.append(PCCov[i][i])
 
+# print((PCList/np.sum(PCList))*100)
 PCArray = np.array(PCList)
+
 # print(PCArray)
 print(PCArray.shape)
 PCSum = np.sum(PCArray)

@@ -74,9 +74,15 @@ def sigmoidtheta1(z, x):
 def sigmoid(z):
     return (1/(1 + (np.exp(-(z)))))
 
+# def fx(zM):
+#     temp = np.exp(-zM)
+#     return 1/(1+temp)
+
 def fx(zM):
-    temp = np.exp(-zM)
-    return 1/(1+temp)
+    ztemp = zM.copy()
+    for i in range(len(ztemp)):
+        ztemp[i][0] = max(0, ztemp[i][0])
+    return ztemp
 
 def yHat(w, a):
     return w @ a
