@@ -1,0 +1,146 @@
+[357 rows x 33 columns]
+(357, 26)
+X_train:  (321, 26)
+y_train:  (321,)
+X_test:  (36, 26)
+y_test:  (36,)
+11.523809523809524
+Iteration 1, loss = 33.03379676
+Iteration 2, loss = 3.28170052
+Iteration 3, loss = 1.80632302
+Iteration 4, loss = 1.44651199
+Iteration 5, loss = 1.25242366
+Iteration 6, loss = 1.24082100
+Iteration 7, loss = 1.14198202
+Iteration 8, loss = 1.03204919
+Iteration 9, loss = 0.97688872
+Iteration 10, loss = 1.29994315
+Iteration 11, loss = 1.01964255
+Iteration 12, loss = 0.85369881
+Iteration 13, loss = 0.81100953
+Iteration 14, loss = 0.68593948
+Iteration 15, loss = 0.61089646
+Iteration 16, loss = 0.62560422
+Iteration 17, loss = 0.68924596
+Iteration 18, loss = 0.84693206
+Iteration 19, loss = 0.88089514
+Iteration 20, loss = 0.72846333
+Iteration 21, loss = 0.54134421
+Iteration 22, loss = 0.50158337
+Iteration 23, loss = 0.52773074
+Iteration 24, loss = 0.48473207
+Iteration 25, loss = 0.47900561
+Iteration 26, loss = 0.47984279
+Iteration 27, loss = 0.47648738
+Iteration 28, loss = 0.44793385
+Iteration 29, loss = 0.44260136
+Iteration 30, loss = 0.43735279
+Iteration 31, loss = 0.46093437
+Iteration 32, loss = 0.50838711
+Iteration 33, loss = 0.43107682
+Iteration 34, loss = 0.41762910
+Iteration 35, loss = 0.47883777
+Iteration 36, loss = 0.47366934
+Iteration 37, loss = 0.41254363
+Iteration 38, loss = 0.43922154
+Iteration 39, loss = 0.40026973
+Iteration 40, loss = 0.40873595
+Iteration 41, loss = 0.42497027
+Iteration 42, loss = 0.40668120
+Iteration 43, loss = 0.40517237
+Iteration 44, loss = 0.38895720
+Iteration 45, loss = 0.38974916
+Iteration 46, loss = 0.38308297
+Iteration 47, loss = 0.38307523
+Iteration 48, loss = 0.41233537
+Iteration 49, loss = 0.41134434
+Iteration 50, loss = 0.43591205
+Iteration 51, loss = 0.39994313
+Iteration 52, loss = 0.39506882
+Iteration 53, loss = 0.39403043
+Iteration 54, loss = 0.38666617
+Iteration 55, loss = 0.36267289
+Iteration 56, loss = 0.37319880
+Iteration 57, loss = 0.40131533
+Iteration 58, loss = 0.44414735
+Iteration 59, loss = 0.45278517
+Iteration 60, loss = 0.38054333
+Iteration 61, loss = 0.38045297
+Iteration 62, loss = 0.35504213
+Iteration 63, loss = 0.34998506
+Iteration 64, loss = 0.40724185
+Iteration 65, loss = 0.43321090
+Iteration 66, loss = 0.34639208
+Iteration 67, loss = 0.34590295
+Iteration 68, loss = 0.34256286
+Iteration 69, loss = 0.34175252
+Iteration 70, loss = 0.35921426
+Iteration 71, loss = 0.38189393
+Iteration 72, loss = 0.46594091
+Iteration 73, loss = 0.50896095
+Iteration 74, loss = 0.36994723
+Iteration 75, loss = 0.35937575
+Iteration 76, loss = 0.35601655
+Iteration 77, loss = 0.34719784
+Iteration 78, loss = 0.40151437
+Iteration 79, loss = 0.38191666
+Iteration 80, loss = 0.33337594
+Iteration 81, loss = 0.33088847
+Iteration 82, loss = 0.33026147
+Iteration 83, loss = 0.34060769
+Iteration 84, loss = 0.35451802
+Iteration 85, loss = 0.37948255
+Iteration 86, loss = 0.33732541
+Iteration 87, loss = 0.34649554
+Iteration 88, loss = 0.38882909
+Iteration 89, loss = 0.33885483
+Iteration 90, loss = 0.32049093
+Iteration 91, loss = 0.33152438
+Iteration 92, loss = 0.38609256
+Iteration 93, loss = 0.43600967
+Iteration 94, loss = 0.34501711
+Iteration 95, loss = 0.33079128
+Iteration 96, loss = 0.32122146
+Iteration 97, loss = 0.32422033
+Iteration 98, loss = 0.34116936
+Iteration 99, loss = 0.31518097
+Iteration 100, loss = 0.32296536
+C:\Users\serey\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\neural_network\_multilayer_perceptron.py:692: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (100) reached and the optimization hasn't converged yet.
+  warnings.warn(
+8 9.116600081904485
+7 7.338089115569181
+15 16.011052228552327
+8 7.168065933658529
+15 15.831636592652192
+13 11.716050958730834
+13 12.022310318015046
+8 7.362196415990752
+7 6.7803586538379985
+15 15.795277313784432
+11 12.118943213505812
+8 7.964796264304805
+15 14.839145580204107
+5 5.602602518065442
+11 12.601969867898973
+16 16.421951032186545
+13 12.610363396313778
+16 16.509577103379357
+14 14.728224847331987
+8 8.611747999855018
+9 9.215921900688988
+10 11.203898756001266
+10 9.469546189335349
+5 4.995947515144827
+9 9.054094570405901
+12 12.463393700311132
+11 10.616764399318814
+10 11.222022098564238
+14 13.592025099799955
+8 7.6377506136143865
+13 12.517711563531405
+8 9.076242296042349
+16 16.80555729932252
+10 11.188318661090126
+13 13.023481137321049
+8 8.725396021523853
+MSE:  0.5853673912157639
