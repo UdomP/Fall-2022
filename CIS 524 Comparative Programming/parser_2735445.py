@@ -29,50 +29,12 @@ def term():
 
 def expr():
     global lookahead
-    e = 0
-    try:
-        e = int(lookahead)
-        match(lookahead)
-    except:
-        try:
-            e = float(lookahead)
-            match(lookahead)
-        except:
-            error()
-    while(lookahead == '+' or lookahead == '-'):
-        if lookahead == '+':
-            match('+')
-            e += expr()
-        elif lookahead == '-':
-            match('-')
-            e -= expr()
-    return e   
 
 def type():
     global lookahead
-    t = lookahead
-    match(lookahead)
-    if lookahead == '=':
-        match('=')
-        e = expr()
-        if (t == 'int' and isinstance(int(e) , int)):
-            return int(e)
-        elif(t == 'real'  and isinstance(float(e) , float)):
-            return float(e)
-    error()
 
 def decl():
     global lookahead
-    global id
-    curId = lookahead
-    match(lookahead)
-    if lookahead == ':':
-        match(':')
-        id[curId] = type()
-        print(curId, ' = ', id[curId])
-        match(lookahead)
-    else:
-        error()
 
 def declList():
     global lookahead
@@ -99,7 +61,8 @@ def letInEnd():
                         if lookahead == ";":
                             match(';')
     else:
-        error()
+        error('Error letInEnd()')
+
 
 def prog():
     global lookahead
@@ -108,10 +71,10 @@ def prog():
         while lookahead == 'let':
             letInEnd()
     else:
-        error()
+        error('Error prog()')
 
-def error():
-    print("ERROR")
+def error(message):
+    print(message)
     exit()
 
 import sys
