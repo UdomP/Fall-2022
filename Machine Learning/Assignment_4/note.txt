@@ -1,0 +1,16 @@
+
+All,
+
+
+
+1. Let's fix the first capital sigma (the first linear combination layer from the left)'s number as 2. Then even the input data's dimension is 8, the computation is still acceptable because for each weight in the first layer, we still just have two paths to the output.
+
+2. We just change the input nodes to 8, no more change in the architecture. To simplify, we don't need the intercepts.
+
+3. That's fine if you decide to use less input feature, you will not receive penalty.
+
+4. Only gradient descent is required, not batch gradient descent.
+
+5. Due to the confusion, the submission deadline has been extended.
+
+6. The reason I decide not to use another dataset is that maybe it's interesting to compare the results with the regression models you developed in the first assignment.

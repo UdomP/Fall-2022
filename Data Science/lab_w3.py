@@ -9,7 +9,8 @@
 
 Cdegrees = range(-20, 41, 5)
 Fdegrees = [(9.0/5)*C + 32 for C in Cdegrees]
-
+for i in Cdegrees:
+    print(i)
 table1 = [Cdegrees, Fdegrees]  # list of two lists
 # table2 = zip(Cdegrees, Fdegrees)
 

@@ -1,0 +1,23 @@
+This is for rainbow trout.
+This is for rainbow trout.
+This is for rainbow trout.
+11.4 8 10 rainbow 
+-1 8 11 rainbow 
+111.7 14 12 rainbow 
+11.5 9 12 rainbow 
+12 8.1 12 rainbow 
+10.1 8.9 11 rainbow 
+12 10 10 rainbow 
+11.4 7 11 rainbow 
+-1 7 11 rainbow 
+12.7 6 20 rainbow 
+14.5 7 21 rainbow 
+12 81.2 11 rainbow 
+-10.1 8.9 10 rainbow 
+-13 10 12 rainbow 
+12 121 11 rainbow 
+11 13 13 rainbow 
+14 11 11.4 rainbow 
+7.4 14 -12.5 rainbow 
+This is for rainbow trout.
+This is for rainbow trout.

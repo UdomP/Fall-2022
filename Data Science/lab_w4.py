@@ -32,6 +32,7 @@ quadFun(1,-4,-8)
 l = []
 for i in np.arange(1.0, 2.1, 0.1):
     l.append(i)
+print((l))
 print(type(l))
 
 A = [1.0 + i*0.1 for i in range(10+1)]
