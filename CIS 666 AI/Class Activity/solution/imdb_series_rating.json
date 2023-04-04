@@ -1,0 +1,62 @@
+{
+    "John Reese": 
+    {
+        "Person of Interest": 4.0,
+        "Silicon Valley": 1.5,
+        "The IT Crowd": 3.0,
+        "The Office": 4.5,
+        "30 Rock": 1.0
+    },
+    "Sameen Shaw": 
+    {
+        "Person of Interest": 3.0,
+        "Silicon Valley": 1.5,
+        "The IT Crowd": 1.0,
+        "The Office": 2.0,
+        "30 Rock": 5.0,
+        "Parks and Recreation": 4.5 
+    },
+    "Harold Finch": 
+    {
+        "Person of Interest": 4.5,
+        "Silicon Valley": 5.0,
+        "The Office": 4.5,
+        "30 Rock": 1.0
+    },
+    "Root Grooves": 
+    {
+        "Silicon Valley": 3.5,
+        "The IT Crowd": 5.0,
+        "The Office": 1.0,
+        "30 Rock": 5.0,
+        "Parks and Recreation": 1.0
+    },
+    "Claire Dunphy": 
+    {
+       "Silicon Valley": 2.5,
+       "30 Rock": 4.5,
+       "Parks and Recreation": 3.0
+    },
+    "Joss Carter": 
+    {
+        "Person of Interest": 5.0,
+        "Silicon Valley": 4.5,
+        "The IT Crowd": 4.0,
+        "The Office": 2.5,
+        "30 Rock": 1.0,
+        "Parks and Recreation": 1.5
+    },
+    "Gloria Pritchett": 
+    {
+       "Person of Interest": 3.5,
+        "Silicon Valley": 3.0,
+        "The Office": 1.0,
+        "30 Rock": 4.5,
+        "Parks and Recreation": 3.0
+    },
+    "Lionel Fusco": 
+    {
+        "The Office": 1.5,
+        "Parks and Recreation": 4.5
+    }
+}
