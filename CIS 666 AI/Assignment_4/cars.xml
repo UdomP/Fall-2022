@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!--ADITYA  PAI -->
+<!-- Add more negative to training. -->
 <opencv_storage>
 <cars3 type_id="opencv-haar-classifier">
   <size>
@@ -2758,12 +2758,12 @@
             <threshold>-1.1625960469245911e-03</threshold>
             <left_val>-0.5429257154464722</left_val>
             <right_val>0.1364106982946396</right_val></_></_>
-        <_ 
+        <_>
           <!-- tree 11 -->
           <_>
             <!-- root node -->
             <feature>
-              <r cts>
+              <rects>
                 <_>
                   3 10 14 6 -1.</_>
                 <_>
@@ -2771,14 +2771,14 @@
                 <_>
                   3 13 7 3 2.</_></rects>
               <tilted>0</tilted></feature>
-            <t res old>-0.0367816612124443</threshold>
+            <threshold>-0.0367816612124443</threshold>
             <left_val>-0.7064548730850220</left_val>
-            <right_val>0.1088668033480 44< right_val>< _>< _>
-         _>
-          <! - tree 12 -->
+            <right_val>0.1088668033480644</right_val></_></_>
+        <_>
+          <!-- tree 12 -->
           <_>
             <!-- root node -->
-             feature>
+            <feature>
               <rects>
                 <_>
                   1 10 6 5 -1.</_>
@@ -2828,8 +2828,8 @@
                   10 13 1 1 2.</_></rects>
               <tilted>0</tilted></feature>
             <threshold>9.4989547505974770e-04</threshold>
-            <left_val>0.0692935213446617</left_va >
-            < ight_va >-0.4393649101257324</right_val></_></_>
+            <left_val>0.0692935213446617</left_val>
+            <right_val>-0.4393649101257324</right_val></_></_>
         <_>
           <!-- tree 16 -->
           <_>
@@ -2839,11 +2839,11 @@
                 <_>
                   8 13 2 1 -1.</_>
                 <_>
-                  9 13 1 1 2.</_></ ects>
+                  9 13 1 1 2.</_></rects>
               <tilted>0</tilted></feature>
-            <threshold>5.9 16740327328444e 04</threshold>
-            <lef _val>0.0982565581798553</left_val>
-            <right_val>- .66298687458038 3</right_val></ ></_>
+            <threshold>5.9616740327328444e-04</threshold>
+            <left_val>0.0982565581798553</left_val>
+            <right_val>-0.6629868745803833</right_val></_></_>
         <_>
           <!-- tree 17 -->
           <_>
@@ -2853,12 +2853,12 @@
                 <_>
                   9 9 2 3 -1.</_>
                 <_>
-                  9 10 2 1 3.</ ></rects>
+                  9 10 2 1 3.</_></rects>
               <tilted>0</tilted></feature>
-            <threshold>-6.2817288562655449e-03</th eshold>
-            <left_val>0.488815099000930 </l ft_val>
+            <threshold>-6.2817288562655449e-03</threshold>
+            <left_val>0.4888150990009308</left_val>
             <right_val>-0.1557238996028900</right_val></_></_></trees>
-      <stage_threshold>-1.1087180376 52856</stage_threshold>
+      <stage_threshold>-1.1087180376052856</stage_threshold>
       <parent>9</parent>
       <next>-1</next></_>
     <_>
@@ -2869,22 +2869,25 @@
           <_>
             <!-- root node -->
             <feature>
-              <rects>                 <_>
+              <rects>
+                <_>
                   9 0 1 8 -1.</_>
                 <_>
                   9 4 1 4 2.</_></rects>
-              <tilted>0</tilted> /feature>
+              <tilted>0</tilted></feature>
             <threshold>-9.9095050245523453e-03</threshold>
-            <left_val>0.5630884766578674</left val>
+            <left_val>0.5630884766578674</left_val>
             <right_val>-0.2063539028167725</right_val></_></_>
-        <_>           <!-- tree 1 -->
-          <_>             <!-- root node -->
+        <_>
+          <!-- tree 1 -->
+          <_>
+            <!-- root node -->
             <feature>
               <rects>
                 <_>
                   19 0 1 14 -1.</_>
                 <_>
-                  19 7 1 7 2 </_></rects>
+                  19 7 1 7 2.</_></rects>
               <tilted>0</tilted></feature>
             <threshold>4.5435219071805477e-03</threshold>
             <left_val>-0.2470169961452484</left_val>
@@ -3649,4 +3652,3 @@
       <parent>11</parent>
       <next>-1</next></_></stages></cars3>
 </opencv_storage>
-<!-- ADITYA -->
