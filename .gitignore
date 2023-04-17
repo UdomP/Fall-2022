@@ -2,5 +2,3 @@
 *.csv
 *.xml
 *.mp4
-.ipynb_checkpoints
-**/*.ipynb_checkpoints/
