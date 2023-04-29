@@ -6,7 +6,7 @@ import matplotlib.pyplot as mlp
 df = pd.read_csv('problems/regression_math/student_math.csv', sep=';')
 
 # Remove row where value in column G3 is zero
-df = df[df['G3'] !=0]
+# df = df[df['G3'] !=0]
 
 # Randomize rows
 # df = df.sample(frac=1)
@@ -133,7 +133,7 @@ y = newDF['G3'].to_numpy()
 x = newDF.drop(toBeRemovedList, axis=1).to_numpy()
 n = (len(np.transpose(x)))
 featureN = len(x.T)
-X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.15, shuffle=False)
+X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.10, shuffle=False)
 y_train = y_train.reshape(1, len(y_train))
 y_test = y_test.reshape(1, len(y_test))
 print('X_train: ', X_train.shape)
@@ -155,3 +155,4 @@ print('MSE: ', MSE(y_test, predict_test, y_test.shape[1]))
 mlp.plot(loss)
 mlp.title('Neural Network 2 Hidden Layer')
 mlp.show()
+#Real
