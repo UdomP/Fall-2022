@@ -77,7 +77,7 @@ def costPrime(yh):
 
 def nn(iter, featureN, _x, _y, alpha):
     weightMatrix1 = np.ones((featureN, featureN)) * .1
-    weightMatrix2 = np.ones((featureN, featureN)) * .1
+    # weightMatrix2 = np.ones((featureN, featureN)) * .1
     weightMatrixLast = np.ones((featureN, featureN)) * .1
     theta = np.ones((featureN + 1, 1))
     lossList = []
